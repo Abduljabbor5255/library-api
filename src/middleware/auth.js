@@ -16,4 +16,11 @@ const authMiddleware = (req, res, next) => {
   }
 };
 
-module.exports = authMiddleware;
+const requireAdmin = (req, res, next) => {
+  if (req.user.role !== "admin") {
+    return res.status(403).json({ error: "Ruxsat yo'q — faqat admin" });
+  }
+  next();
+};
+
+module.exports = { authMiddleware, requireAdmin };

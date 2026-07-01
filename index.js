@@ -1,6 +1,8 @@
 const express = require("express");
 require("dotenv").config();
 const pool = require("./src/db/database");
+const errorHandler = require("./src/middleware/errorHandler");
+
 
 const app = express();
 app.use(express.json());
@@ -8,6 +10,8 @@ app.use(express.json());
 app.use("/auth", require("./src/routes/authRoutes"));
 app.use("/books", require("./src/routes/booksRoutes"));
 app.use("/authors", require("./src/routes/authorsRoutes"));
+app.use(errorHandler);
+
 
 app.get("/", (req, res) => res.send("Library API"));
 
