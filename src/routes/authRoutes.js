@@ -7,7 +7,8 @@ const { registerSchema, loginSchema } = require("../middleware/schemas");
 const authLimiter = rateLimit({
   windowMs: 15 * 60 * 1000,
   max: 5,
-  message: { error: "Juda ko'p urinish, aniqrog'i 5 marta urundingiz, 15 daqiqadan keyin qaytadan urining" }
+  message: { error: "Juda ko'p urinish, aniqrog'i 5 marta urundingiz, 15 daqiqadan keyin qaytadan urining" },
+  skip: () => process.env.NODE_ENV === "test"
 });
 
 router.post("/register", authLimiter, validate(registerSchema), register);

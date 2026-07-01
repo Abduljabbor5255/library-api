@@ -37,7 +37,24 @@ const migrate = async () => {
     `);
     console.log("books jadvali tayyor");
 
+    await pool.query(`
+  ALTER TABLE books 
+  ADD COLUMN IF NOT EXISTS copies_count INT NOT NULL DEFAULT 1;
+`);
+    console.log("books.copies_count qo'shildi");
+
+    await pool.query(`
+  CREATE TABLE IF NOT EXISTS loans (
+    id SERIAL PRIMARY KEY,
+    user_id INT REFERENCES users(id) ON DELETE CASCADE,
+    book_id INT REFERENCES books(id) ON DELETE CASCADE,
+    borrowed_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    returned_at TIMESTAMP DEFAULT NULL
+  );
+`);
+    console.log("loans jadvali tayyor");
     console.log("Migratsiya yakunlandi!");
+
     process.exit(0);
   } catch (err) {
     console.error("Migratsiya xatosi:", err);
