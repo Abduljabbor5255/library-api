@@ -69,7 +69,7 @@ describe("AUTH — Login", () => {
     expect(res.body.token).toBeDefined(); 
   });
 
-  test("❌ Noto'g'ri parol bilan login", async () => {
+  test("Noto'g'ri parol bilan login", async () => {
     const res = await request(app)
       .post("/auth/login")
       .send({
@@ -79,7 +79,7 @@ describe("AUTH — Login", () => {
     expect(res.statusCode).toBe(401);
   });
 
-  test("❌ Mavjud bo'lmagan email bilan login", async () => {
+  test("Mavjud bo'lmagan email bilan login", async () => {
     const res = await request(app)
       .post("/auth/login")
       .send({
